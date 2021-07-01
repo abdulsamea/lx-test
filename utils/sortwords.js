@@ -1,5 +1,5 @@
 /**
- * @summary provides sortinf (ascending or descending) for a given word.
+ * @summary provides sorting (ascending or descending) for a given word.
    * @param {string} input
    * @param {string} ordering
    * @returns {Object} result

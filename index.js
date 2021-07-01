@@ -9,9 +9,9 @@ app.get("/reverse-words", (req, res, next) => {
 
     let input = req.query.string;
     let output = reverseUtil.reverseWord(input);
-    res.send({
-        result: output
-    });
+
+    // send output.
+    res.send(output);
 
 });
 
