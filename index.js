@@ -7,8 +7,16 @@ var sortUtil = require('./utils/sortwords');
 
 app.get("/reverse-words", (req, res, next) => {
 
-    let input = req.query.string;
-    let output = reverseUtil.reverseWord(input);
+    let input = req.query.sentence;
+
+    // check if url has no sentence parameter
+    if(!input){
+        res.send({
+            "message": "The request is invalid."
+        })
+        return
+    }
+    let output = reverseUtil.reverseWord(((req.query.sentence)));
 
     // send output.
     res.send(output);

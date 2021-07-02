@@ -14,45 +14,45 @@ describe('Test cases for reverse api', () => {
 
     })
 
-    it('should test that error message are seen on get url /reverse-words when string query param is absent', async done => {
+    it('should test that error message are seen on get url /reverse-words when sentence query param is absent', async done => {
 
         const response = await request.get('/reverse-words')
-        expect(response.body.result).toBe('Please provide a query parameter in url.')
+        expect(response.body.message).toBe('The request is invalid.')
         done();
 
     })
 
-    it('should test that error message are seen on get url /reverse-words when string query param is empty', async done => {
+    it('should test that error message are seen on get url /reverse-words when sentence query param is empty', async done => {
 
-        const response = await request.get('/reverse-words?string=')
-        expect(response.body.result).toBe('Please provide a query parameter in url.')
+        const response = await request.get('/reverse-words?sentence=')
+        expect(response.body.message).toBe('The request is invalid.')
         done();
 
     })
 
     it('should test that reverse string object is seen on passing awdsAQWS', async done => {
 
-        const response = await request.get('/reverse-words?string=awdsAQWS')
-        expect(response.body.result).toBe('SWQAsdwa')
-        expect(response.body.result.length).toBe('SWQAsdwa'.length)
+        const response = await request.get('/reverse-words?sentence=awdsAQWS')
+        expect(response.text).toBe("\"SWQAsdwa\"")
+        expect(response.text.length).toBe("\"SWQAsdwa\"".length)
         done();
 
     })
 
     it('should test that reverse string object is seen on passing  KNJHJYGihkbu!~234~ (with special characters and numbers)', async done => {
 
-        const response = await request.get('/reverse-words?string=KNJHJYGihkbu!~234~')
-        expect(response.body.result).toBe('~432~!ubkhiGYJHJNK')
-        expect(response.body.result.length).toBe('~432~!ubkhiGYJHJNK'.length)
+        const response = await request.get('/reverse-words?sentence=KNJHJYGihkbu!~234~')
+        expect(response.text).toBe("\"ubkhiGYJHJNK!~432~\"")
+        expect(response.text.length).toBe("\"ubkhiGYJHJNK!~432~\"".length)
         done();
 
     })
 
     it('should test that reverse string object is seen on passing  123234 (only numbers)', async done => {
 
-        const response = await request.get('/reverse-words?string=123234')
-        expect(response.body.result).toBe('432321')
-        expect(response.body.result.length).toBe('432321'.length)
+        const response = await request.get('/reverse-words?sentence=123234')
+        expect(response.text).toBe("\"432321\"")
+        expect(response.text.length).toBe("\"432321\"".length)
         done();
 
     })
