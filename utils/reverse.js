@@ -14,7 +14,6 @@ let reverseWord = (input) => {
 * @returns result string
 */
  let getReverse = (input) => {
-     console.log(input)
     var word = ''
     var result ='';
     for(let i = 0; i < input.length; i++){

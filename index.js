@@ -25,7 +25,13 @@ app.get("/reverse-words", (req, res, next) => {
 
 app.get("/sort-words", (req, res, next) => {
 
-    let input = req.query.string;
+    let input = req.query.sentence;
+    if(!input){
+        res.send({
+            "message": "The request is invalid."
+        })
+        return
+    }
     let ordering = req.query.sort;
     let output = sortUtil.sortWords(input, ordering);
 

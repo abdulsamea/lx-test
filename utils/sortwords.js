@@ -5,33 +5,38 @@
    * @returns {Object} result
    */
 let sortWords = (input, ordering) => {
+    let output = getSorted(input);
+    return output
+}
 
-    let output;
-    //check if string query is present or not. 
-    if (!input || input === "") {
-        output = 'Please provide a string query parameter in url.'
-        return {
-            result: output
-        };
+/**
+ * @summary provides reverse for a given string - algorithm implementation.
+* @param {string} input a string input
+* @returns result string
+*/
+let getSorted = (input) => {
+    var word = ''
+    var result ='';
+    for(let i = 0; i < input.length; i++){
+        // keep punctuations in place
+        var format = /^[!?".,]*$/
+        if (format.test(input[i]) || input[i] == " "){
+           
+            word = [...word].sort(function (a, b) {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
+            }).join('');
+            result+=(word);
+            result+=(input[i]);
+            word = ''
+        }
+        else{
+            word += input[i];
+            
+        }
+        
     }
-
-    //check if improper value for sort query parameter is passed. 
-    if (ordering && (ordering !== 'asc' || ordering !== 'desc')) {
-        output = `The value of sort parameter can only be 'asc' or 'desc.'`
-    }
-
-    //sort for ascending order. 
-    if (ordering === 'asc' || ordering === undefined || ordering === '') {
-        output = [...input].sort().join('');
-    }
-    //sort for descending order. 
-    if (ordering === 'desc') {
-        output = [...input].sort().reverse().join('');
-    }
-
-    return {
-        result: output
-    }
+    let remaining = word.length <= 0 ? '' : word.split('').reverse().join('');
+    return `"${result}` + `${remaining}"`;
 }
 
 module.exports = {

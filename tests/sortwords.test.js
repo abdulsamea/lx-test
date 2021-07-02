@@ -4,7 +4,7 @@ const request = supertest(app)
 
 process.env.NODE_ENV = 'test';
 
-describe('Test cases for reverse api', () => {
+describe('Test cases for sort api', () => {
 
     it('should test that results are fetching from get url /sort-words', async done => {
 
@@ -14,73 +14,46 @@ describe('Test cases for reverse api', () => {
 
     })
 
-    it('should test that error message is seen on get url /sort-words when string query param is absent', async done => {
+    it('should test that error message are seen on get url /sort-words when sentence query param is absent', async done => {
 
         const response = await request.get('/sort-words')
-        expect(response.body.result).toBe('Please provide a string query parameter in url.')
+        expect(response.body.message).toBe('The request is invalid.')
         done();
 
     })
 
-    it('should test that error message is seen on get url /sort-words when string query param is empty', async done => {
+    it('should test that error message are seen on get url /sort-words when sentence query param is empty', async done => {
 
-        const response = await request.get('/sort-words?string=')
-        expect(response.body.result).toBe('Please provide a string query parameter in url.')
+        const response = await request.get('/sort-words?sentence=')
+        expect(response.body.message).toBe('The request is invalid.')
         done();
 
     })
 
-    it('should test that error message is seen on get url /sort-words when sort query param is wrong (should be either asc or desc)', async done => {
+    it('should test that sort string object is seen on passing iS my love puRE tHan MILk?', async done => {
 
-        const response = await request.get('/sort-words?string=asfg&sort=as')
-        expect(response.body.result).toBe("The value of sort parameter can only be 'asc' or 'desc.'")
+        const response = await request.get('/sort-words?sentence=iS my love puRE tHan MILk?')
+        expect(response.text).toBe("\"iS my elov EpRu aHnt IkLM?\"")
+        expect(response.text.length).toBe("\"iS my elov EpRu aHnt IkLM?\"".length)
         done();
 
     })
 
-    it('should test that sorted (ascending order by default) string object is seen on passing awdsAQWS', async done => {
+    it('should test that sort string object is seen on passing " LX\'s head office is located in Sydney, Australia. "', async done => {
 
-        const response = await request.get('/sort-words?string=awdsAQWS')
-        expect(response.body.result).toBe('AQSWadsw')
-        expect(response.body.result.length).toBe('AQSWadsw'.length)
+        const response = await request.get('/sort-words?sentence=LX\'s head office is located in Sydney, Australia.')
+        expect(response.text).toBe("\"'LsX adeh ceffio is acdelot in denSyy, Aaailrstu.\"")
+        expect(response.text.length).toBe("\"'LsX adeh ceffio is acdelot in denSyy, Aaailrstu.\"".length)
         done();
 
     })
 
-    it('should test that sorted (ascending) string object is seen on passing  KNJHJYGihkbu!~234~ (with special characters and numbers)', async done => {
+    it('should test that sort string object is seen on passing " The sentance "Hello World!" is often used in programming examples? "', async done => {
 
-        const response = await request.get('/sort-words?string=KNJHJYGihkbu!~234~&sort=asc')
-        expect(response.body.result).toBe('!234GHJJKNYbhiku~~')
-        expect(response.body.result.length).toBe('!234GHJJKNYbhiku~~'.length)
+        const response = await request.get('/sort-words?sentence=The sentance "Hello World!" is often used in programming examples?')
+        expect(response.text).toBe("\"ehT aceennst \"eHllo dlorW!\" is efnot desu in aggimmnoprr aeelmpsx?\"")
+        expect(response.text.length).toBe("\"ehT aceennst \"eHllo dlorW!\" is efnot desu in aggimmnoprr aeelmpsx?\"".length)
         done();
 
     })
-
-    it('should test that sorted (descending) string object is seen on passing  KNJHJYGihkbu!~234~ (with special characters and numbers)', async done => {
-
-        const response = await request.get('/sort-words?string=KNJHJYGihkbu!~234~&sort=desc')
-        expect(response.body.result).toBe('~~ukihbYNKJJHG432!')
-        expect(response.body.result.length).toBe('~~ukihbYNKJJHG432!'.length)
-        done();
-
-    })
-
-    it('should test that sorted (ascending) string object is seen on passing  123HAUYF7hukjknloi (upper case, lower case and numbers)', async done => {
-
-        const response = await request.get('/sort-words?string=123HAUYF7hukjknloi')
-        expect(response.body.result).toBe('1237AFHUYhijkklnou')
-        expect(response.body.result.length).toBe('1237AFHUYhijkklnou'.length)
-        done();
-
-    })
-
-    it('should test that sorted (descending) string object is seen on passing  123HAUYF7hukjknloi (upper case, lower case and numbers)', async done => {
-
-        const response = await request.get('/sort-words?string=123HAUYF7hukjknloi&sort=desc')
-        expect(response.body.result).toBe('uonlkkjihYUHFA7321')
-        expect(response.body.result.length).toBe('uonlkkjihYUHFA7321'.length)
-        done();
-
-    })
-
 })
