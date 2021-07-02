@@ -2,6 +2,8 @@ const app = require('../index')
 const supertest = require('supertest')
 const request = supertest(app)
 
+process.env.NODE_ENV = 'test';
+
 describe('Test cases for reverse api', () => {
 
     it('should test that results are fetching from get url /reverse-words', async done => {

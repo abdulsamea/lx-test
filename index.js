@@ -30,7 +30,9 @@ app.get("/sort-words", (req, res, next) => {
 // export app to be so it can be used in other modules (eg: testing)
 module.exports = app
 
-// start server
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
-});
+// start server...
+let port = 3000;
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => console.log(`Listening on port ${port}`));
+}
