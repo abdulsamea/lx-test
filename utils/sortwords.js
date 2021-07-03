@@ -35,7 +35,11 @@ let getSorted = (input) => {
         }
         
     }
-    let remaining = word.length <= 0 ? '' : word.split('').reverse().join('');
+
+    
+    let remaining = word.length <= 0 ? '' : [...word].sort(function (a, b) {
+        return a.toLowerCase().localeCompare(b.toLowerCase()) }).join('');
+
     return `"${result}` + `${remaining}"`;
 }
 
