@@ -16,7 +16,8 @@ app.get("/reverse-words", (req, res, next) => {
         })
         return
     }
-    let output = reverseUtil.reverseWord(((req.query.sentence)));
+    let output = reverseUtil.reverseWord(req.query.sentence);
+    
 
     // send output.
     res.send(output);
