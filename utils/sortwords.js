@@ -4,7 +4,7 @@
    * @param {string} ordering
    * @returns {Object} result
    */
-let sortWords = (input, ordering) => {
+let sortWords = (input) => {
     let output = getSorted(input);
     return output
 }
