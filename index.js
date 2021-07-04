@@ -5,7 +5,8 @@ var app = express();
 var reverseUtil = require('./utils/reverse');
 var sortUtil = require('./utils/sortwords');
 var afterTaxUtil = require('./utils/afterTaxIncome');
-const { response } = require("express");
+var postTaxUtil = require('./utils/postTaxSalary');
+
 
 app.get("/reverse-words", (req, res, next) => {
 
@@ -47,7 +48,8 @@ app.get("/calculate-after-tax-income", (req, res, next) => {
 
     let input = (req.query.annualBaseSalary);
     // check for invalid number or input.
-    if(isNaN(input) || ! /^\d{0,99}(\.\d{1,99})?$/.test(input) || !input){
+    
+    if(isNaN(input) || ! /^\-{0,1}\+{0,1}\d{0,99}(\.\d{1,99})?$/.test(input) || !input){
         res.send({
             "message": "The request is invalid."
         })
@@ -55,6 +57,24 @@ app.get("/calculate-after-tax-income", (req, res, next) => {
     }
    
     let output = afterTaxUtil.getTax(parseFloat(input));
+
+    //send output.
+    res.send(output);
+
+});
+
+app.get("/calculate-pre-tax-income-from-take-home", (req, res, next) => {
+
+    let input = (req.query.postTaxSalary);
+    // check for invalid number or input.
+    if(isNaN(input) || ! /^\-{0,1}\+{0,1}\d{0,99}(\.\d{1,99})?$/.test(input) || !input){       
+        res.send({   
+            "message": "The request is invalid."
+        })
+        return
+    }
+   
+    let output = postTaxUtil.getTax(parseFloat(input));
 
     //send output.
     res.send(output);
