@@ -46,7 +46,7 @@ app.get("/sort-words", (req, res, next) => {
 module.exports = app
 
 // start server...
-let port = 3000;
+let port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => console.log(`Listening on port ${port}`));
