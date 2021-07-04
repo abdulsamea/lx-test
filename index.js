@@ -5,6 +5,7 @@ var app = express();
 var reverseUtil = require('./utils/reverse');
 var sortUtil = require('./utils/sortwords');
 var afterTaxUtil = require('./utils/afterTaxIncome');
+const { response } = require("express");
 
 app.get("/reverse-words", (req, res, next) => {
 
@@ -44,16 +45,16 @@ app.get("/sort-words", (req, res, next) => {
 
 app.get("/calculate-after-tax-income", (req, res, next) => {
 
-    let input = parseInt(req.query.annualBaseSalary);
-    
-    if(!input || isNaN(input)){
+    let input = (req.query.annualBaseSalary);
+    // check for invalid number or input.
+    if(isNaN(input) || ! /^\d{0,99}(\.\d{1,99})?$/.test(input) || !input){
         res.send({
             "message": "The request is invalid."
         })
         return
     }
    
-    let output = afterTaxUtil.getTax(input);
+    let output = afterTaxUtil.getTax(parseFloat(input));
 
     //send output.
     res.send(output);

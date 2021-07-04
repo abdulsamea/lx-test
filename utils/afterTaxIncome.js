@@ -16,7 +16,7 @@
  let calculateIncomeTax = (input) => {
   
     let initialvalue = input;
-    console.log('initial = ' + initialvalue)
+    
     let taxValueA = 0
     let taxValueB = 0
     let taxValueC = 0
@@ -50,17 +50,14 @@
 
     let finalIncomeTax = taxValueA + taxValueB + taxValueC + taxValueD + taxValueE; 
     // round off tax values above .159 and return
-    let roundedIncomeTax =  parseInt((finalIncomeTax).toFixed(3).toString().split('.')[1]) >= 159 ? (parseInt((finalIncomeTax).toFixed(3).toString().split('.')[0]) + 1) : finalIncomeTax.toFixed(3).toString().split('.')[0];
+    let roundedIncomeTax =  parseInt((finalIncomeTax).toFixed(3).toString().split('.')[1]) >= 159 ? (parseInt((finalIncomeTax).toFixed(3).toString().split('.')[0]) + 1) : parseInt(finalIncomeTax.toFixed(3).toString().split('.')[0]);
     // get superannuation.
     let superannuation = (Math.round(((initialvalue /100 ) * 9.5) * 100) / 100);
-
     // get medicare value.
-
     let medicareValue = initialvalue <=21336 ? 0 : initialvalue > 21336 && initialvalue <= 26668 ? 10 * ((initialvalue - 21336) / 100 ) : 2 * (initialvalue / 100);  
-
+    medicareValue = parseFloat(medicareValue.toFixed(2));
     // get total taxes.
-    console.log(roundedIncomeTax,medicareValue)
-    let totalTax = (roundedIncomeTax + medicareValue).toFixed(0)
+    let totalTax = Math.round(roundedIncomeTax + medicareValue)
 
 
     // return final taxation values.
